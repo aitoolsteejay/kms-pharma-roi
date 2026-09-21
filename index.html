@@ -209,44 +209,11 @@
   .bd-row.total .val{color:var(--gold-strong);}
   .bd-note{font-size:11.5px; color:var(--text-faint); margin-top:14px; line-height:1.5;}
 
-  /* ---------- lead capture ---------- */
-  .lead-section{padding-block:10px 50px;}
-  .lead-card{
-    background:var(--surface); border:1px solid var(--border-soft); border-radius:16px;
-    padding:30px; box-shadow:var(--shadow);
-    display:grid; grid-template-columns:1.3fr 1fr; gap:28px; align-items:center;
-  }
-  @media (max-width:760px){ .lead-card{grid-template-columns:1fr;} }
-  .lead-card h3{font-size:21px; margin-bottom:8px;}
-  .lead-card p{color:var(--text-soft); font-size:14px; margin-bottom:0;}
-  .cred-list{list-style:none; padding:0; margin:14px 0 0; display:flex; flex-direction:column; gap:6px;}
-  .cred-list li{font-size:12.5px; color:var(--text-faint); display:flex; gap:8px; align-items:flex-start;}
-  .cred-list li::before{content:'✓'; color:var(--accent-strong); font-weight:700;}
-  .lead-form{display:flex; flex-direction:column; gap:10px;}
-  .lead-form .row{display:flex; gap:8px;}
-  .lead-form input[type="email"]{flex:1;}
   .btn{
     background:var(--accent); color:#fff; border:none; border-radius:9px;
     padding:11px 16px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap;
   }
   .btn:hover{background:var(--accent-strong);}
-  .btn-ghost{
-    background:none; border:1px solid var(--border); color:var(--text);
-    border-radius:9px; padding:11px 16px; font-size:14px; font-weight:600; cursor:pointer; text-align:center;
-  }
-  .btn-ghost:hover{border-color:var(--accent);}
-  .form-msg{font-size:12px; color:var(--text-faint);}
-  .success{
-    display:flex; gap:10px; align-items:flex-start; background:var(--accent-soft);
-    color:var(--accent-strong); border-radius:10px; padding:14px 16px; font-size:13.5px;
-  }
-
-  .cta-strip{
-    margin-top:18px; padding-top:18px; border-top:1px solid var(--border-soft);
-    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
-    grid-column:1/-1;
-  }
-  .cta-strip p{font-size:13.5px; color:var(--text-soft); max-width:56ch;}
 
   footer{border-top:1px solid var(--border-soft); padding-block:26px 40px;}
   .foot-grid{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-start;}
@@ -469,34 +436,9 @@
   </div>
 </div>
 
-<div class="wrap lead-section">
-  <div class="lead-card">
-    <div>
-      <h3>Email me the assumption-backed breakdown</h3>
-      <p>A PDF with the bridge table above, the price-erosion curve sources by market, and a one-page KMS BA/BE facility credential.</p>
-      <ul class="cred-list">
-        <li>USFDA / MHRA inspection status &amp; history</li>
-        <li>Clinic capacity, volunteer panel size, EC registration</li>
-        <li>In-house bioanalytical + CTD dossier authoring under one roof</li>
-      </ul>
-    </div>
-    <form class="lead-form" id="leadForm">
-      <div class="row">
-        <input type="email" id="leadEmail" placeholder="you@company.com" required>
-        <button class="btn" type="submit">Send PDF</button>
-      </div>
-      <div class="form-msg" id="leadMsg">We'll send the breakdown for this exact scenario: market, dosage form and molecule value included.</div>
-    </form>
-    <div class="cta-strip">
-      <p>Want this run on your actual molecule with real IQVIA numbers?</p>
-      <a class="btn-ghost" id="ctaCall" href="mailto:hello@kmspharma.example?subject=30-minute%20BA%2FBE%20feasibility%20call" style="text-decoration:none;">Book a 30-minute feasibility call →</a>
-    </div>
-  </div>
-</div>
-
 <footer>
   <div class="wrap foot-grid">
-    <div class="foot-cred">KMS Pharma: in-house BA/BE clinic and CTD dossier development under one roof. Replace the facility credentials, contact address and booking link above with KMS's own before this goes live.</div>
+    <div class="foot-cred">KMS Pharma: in-house BA/BE clinic and CTD dossier development under one roof. Replace this credential line and the PDF's facility details with KMS's own before this goes live.</div>
     <div class="foot-legal">Illustrative model built on typical industry timelines and price-erosion patterns. Actual timelines, approval odds and pricing depend on molecule-specific factors; figures here are planning estimates, not guarantees.</div>
   </div>
 </footer>
@@ -569,7 +511,7 @@
    'croCost','inHouseCost','programmeCost','baselineFiling','curveBody',
    'baselineDateOut','acceleratedDateOut','rankShiftOut','headlineValue','roiMultiple',
    'barV1','barV2','barV3','v1out','v2out','v3out','grossOut','riskAdjOut','npvOut',
-   'leadForm','leadEmail','leadMsg','croTrack','kmsTrack','croTotalWk','kmsTotalWk'
+   'croTrack','kmsTrack','croTotalWk','kmsTotalWk'
   ].forEach(function(id){ els[id] = $(id); });
 
   function renderMarketOptions(){
@@ -1039,15 +981,6 @@
   els.resetAdvanced.addEventListener('click', resetAdvancedOnly);
   $('loadDemo').addEventListener('click', loadDemo);
   $('downloadPdf').addEventListener('click', generatePDF);
-
-  els.leadForm.addEventListener('submit', function(e){
-    e.preventDefault();
-    var email = els.leadEmail.value.trim();
-    if (!email) return;
-    var scenario = els.market.value + ' · ' + DOSAGE[els.dosage.value].label + ' · ' +
-      fmtUSD(parseFloat(els.marketValue.value)||0, curSymbol()) + ' market · rank ' + els.entrantRank.value;
-    els.leadForm.innerHTML = '<div class="success">✓ &nbsp;Thanks! The breakdown for <strong>'+scenario+'</strong> is on its way to '+email+'. (Demo form: connect this to your CRM or form endpoint to send real email.)</div>';
-  });
 
   renderMarketOptions();
   renderCurrencyOptions();
