@@ -1,4 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The Four-Month Model</title>
+<meta name="description" content="BA/BE acceleration ROI calculator for KMS Pharma: what an in-house BA/BE and dossier timeline is worth on a specific molecule.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -248,6 +254,8 @@
   .foot-legal{font-size:11px; color:var(--text-faint); max-width:34ch; line-height:1.6; text-align:right;}
   @media (max-width:600px){ .foot-legal{text-align:left;} }
 </style>
+</head>
+<body>
 
 <div class="topbar">
   <div class="wrap topbar-inner">
@@ -262,7 +270,7 @@
 <div class="wrap hero">
   <span class="eyebrow">BA/BE acceleration · ROI model</span>
   <h1 class="hook">You don't lose money on a failed BE study. You lose it on <em>the four months you waited for a slot.</em></h1>
-  <p class="sub"><strong>In-house BA/BE + development dossier under one roof</strong> means a first-time filing lands roughly four months sooner. Below is where that number comes from — and what it's worth on your molecule.</p>
+  <p class="sub"><strong>In-house BA/BE + development dossier under one roof</strong> means a first-time filing lands roughly four months sooner. Below is where that number comes from, and what it's worth on your molecule.</p>
 
   <div class="bridge">
     <div class="bridge-head">
@@ -298,7 +306,7 @@
           </tbody>
         </table>
       </div>
-      <p class="caveat">If the pilot BE fails — industry-typical 20–30% for topicals, MR and high-variability drugs — the outsourced route restarts steps 1–2 (≈10–14 more weeks of re-contracting and re-queueing). In-house, it's a re-slot. That's why the saving used below is a <strong>P50 of ~4 months</strong>, not a ceiling: state it as a range, not a guarantee.</p>
+      <p class="caveat">If the pilot BE fails (industry-typical 20–30% for topicals, MR and high-variability drugs), the outsourced route restarts steps 1–2 (≈10–14 more weeks of re-contracting and re-queueing). In-house, it's a re-slot. That's why the saving used below is a <strong>P50 of ~4 months</strong>, not a ceiling: state it as a range, not a guarantee.</p>
     </details>
   </div>
 </div>
@@ -306,7 +314,7 @@
 <div class="wrap calc-section">
   <div class="section-head">
     <h2>What are those months worth on your molecule?</h2>
-    <p>Five inputs drive it. Everything else — erosion curves, repeat-study risk, discount rate — is a defaults set you can open and edit. <button class="demo-link" id="loadDemo" type="button">Reload the US ANDA demo</button></p>
+    <p>Five inputs drive it. Everything else (erosion curves, repeat-study risk, discount rate) is a defaults set you can open and edit. <button class="demo-link" id="loadDemo" type="button">Reload the US ANDA demo</button></p>
   </div>
 
   <div class="calc-grid">
@@ -339,7 +347,7 @@
           <span class="slider-val num" id="marketValueDisplay">$80.0M</span>
         </div>
         <input type="number" id="marketValue" min="0" step="1000000" style="margin-top:8px;">
-        <p class="hint">Dollar figures throughout (this slider, and the CRO/in-house cost defaults under Advanced assumptions) are calibrated for USD-scale amounts — adjust them manually after switching currency.</p>
+        <p class="hint">Dollar figures throughout (this slider, and the CRO/in-house cost defaults under Advanced assumptions) are calibrated for USD-scale amounts. Adjust them manually after switching currency.</p>
       </div>
 
       <div class="row2">
@@ -375,7 +383,7 @@
             <div class="field">
               <label for="rankShift">Entrant-rank positions gained</label>
               <select id="rankShift">
-                <option value="0">0 — no rank change</option>
+                <option value="0">0 (no rank change)</option>
                 <option value="1">1 position</option>
                 <option value="2" selected>2 positions</option>
               </select>
@@ -416,7 +424,7 @@
           </div>
 
           <div class="field" style="margin-top:4px;">
-            <label>Price &amp; share by entrant rank <span style="font-weight:400; color:var(--text-faint);">— auto-set by market, editable</span></label>
+            <label>Price &amp; share by entrant rank <span style="font-weight:400; color:var(--text-faint);">(auto-set by market, editable)</span></label>
             <table class="curve-table">
               <thead><tr><th>Rank</th><th>Price, % of brand</th><th>Share, %</th></tr></thead>
               <tbody id="curveBody"></tbody>
@@ -430,7 +438,7 @@
 
     <div class="output">
       <div class="output-eyebrow">Estimated impact</div>
-      <div class="filing-shift">Filing moves from <b id="baselineDateOut">—</b> <span class="filing-arrow">→</span> <b id="acceleratedDateOut">—</b></div>
+      <div class="filing-shift">Filing moves from <b id="baselineDateOut">...</b> <span class="filing-arrow">→</span> <b id="acceleratedDateOut">...</b></div>
       <div class="filing-shift" style="margin-bottom:0;">Entrant position: <b id="rankShiftOut">6th → 4th</b></div>
 
       <div class="headline-value" id="headlineValue">$0.0M</div>
@@ -448,14 +456,15 @@
       </div>
 
       <div class="breakdown">
-        <div class="bd-row"><span class="label">V1 — earlier revenue capture</span><span class="val num" id="v1out">$0</span></div>
-        <div class="bd-row"><span class="label">V2 — entrant-rank shift</span><span class="val num" id="v2out">$0</span></div>
-        <div class="bd-row"><span class="label">V3 — cost &amp; risk avoidance</span><span class="val num" id="v3out">$0</span></div>
+        <div class="bd-row"><span class="label">V1: earlier revenue capture</span><span class="val num" id="v1out">$0</span></div>
+        <div class="bd-row"><span class="label">V2: entrant-rank shift</span><span class="val num" id="v2out">$0</span></div>
+        <div class="bd-row"><span class="label">V3: cost &amp; risk avoidance</span><span class="val num" id="v3out">$0</span></div>
         <div class="bd-row"><span class="label">Gross value</span><span class="val num" id="grossOut">$0</span></div>
         <div class="bd-row"><span class="label">Risk-adjusted (× P(approval))</span><span class="val num" id="riskAdjOut">$0</span></div>
         <div class="bd-row total"><span class="label">NPV at r, time-adjusted</span><span class="val num" id="npvOut">$0</span></div>
       </div>
-      <p class="bd-note">Up to ~4 months on a typical first-time filing, based on the 5-step bridge above. V2 is usually the number that lands hardest — it isn't extra speed, it's a permanent shift in who you are on the shelf.</p>
+      <p class="bd-note">Up to ~4 months on a typical first-time filing, based on the 5-step bridge above. V2 is usually the number that lands hardest. It isn't extra speed, it's a permanent shift in who you are on the shelf.</p>
+      <button type="button" class="btn" id="downloadPdf" style="width:100%; margin-top:18px;">Download PDF report</button>
     </div>
   </div>
 </div>
@@ -476,7 +485,7 @@
         <input type="email" id="leadEmail" placeholder="you@company.com" required>
         <button class="btn" type="submit">Send PDF</button>
       </div>
-      <div class="form-msg" id="leadMsg">We'll send the breakdown for this exact scenario — market, dosage form and molecule value included.</div>
+      <div class="form-msg" id="leadMsg">We'll send the breakdown for this exact scenario: market, dosage form and molecule value included.</div>
     </form>
     <div class="cta-strip">
       <p>Want this run on your actual molecule with real IQVIA numbers?</p>
@@ -487,11 +496,13 @@
 
 <footer>
   <div class="wrap foot-grid">
-    <div class="foot-cred">KMS Pharma — in-house BA/BE clinic and CTD dossier development under one roof. Replace the facility credentials, contact address and booking link above with KMS's own before this goes live.</div>
-    <div class="foot-legal">Illustrative model built on typical industry timelines and price-erosion patterns. Actual timelines, approval odds and pricing depend on molecule-specific factors — figures here are planning estimates, not guarantees.</div>
+    <div class="foot-cred">KMS Pharma: in-house BA/BE clinic and CTD dossier development under one roof. Replace the facility credentials, contact address and booking link above with KMS's own before this goes live.</div>
+    <div class="foot-legal">Illustrative model built on typical industry timelines and price-erosion patterns. Actual timelines, approval odds and pricing depend on molecule-specific factors; figures here are planning estimates, not guarantees.</div>
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/4.2.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/5.0.8/jspdf.plugin.autotable.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -568,7 +579,7 @@
   }
   function renderCurrencyOptions(){
     els.currency.innerHTML = CURRENCY_ORDER.map(function(c){
-      return '<option value="'+c+'">'+c+' — '+CURRENCIES[c].label+'</option>';
+      return '<option value="'+c+'">'+c+' ('+CURRENCIES[c].label+')</option>';
     }).join('');
   }
   function curSymbol(){
@@ -710,7 +721,7 @@
     els.grossMarginDisplay.textContent = (parseFloat(els.grossMarginRange.value)||0) + '%';
   }
 
-  function recalc(){
+  function computeScenario(){
     var market = els.market.value;
     var dosage = els.dosage.value;
     var marketValue = parseFloat(els.marketValue.value) || 0;
@@ -751,27 +762,248 @@
 
     var baseline = els.baselineFiling.value ? new Date(els.baselineFiling.value + '-01T00:00:00') : new Date();
     var accelerated = addMonths(baseline, -monthsAccel);
-    els.baselineDateOut.textContent = fmtMonth(baseline);
-    els.acceleratedDateOut.textContent = fmtMonth(accelerated);
-    els.rankShiftOut.textContent = ordinal(oldRankRaw>6?7:oldRank) + (oldRankRaw>6?'+':'') + ' → ' + ordinal(newRank);
 
-    var sym = curSymbol();
-    els.headlineValue.textContent = fmtUSDCompactHeadline(riskAdjusted, sym);
-    els.roiMultiple.textContent = (isFinite(roiMultiple)?roiMultiple.toFixed(1):'0.0') + '×';
+    return {
+      market: market, marketLabel: MARKETS[market].label,
+      dosage: dosage, dosageLabel: DOSAGE[dosage].label,
+      currency: els.currency.value, sym: curSymbol(),
+      marketValue: marketValue, grossMargin: grossMargin,
+      oldRankRaw: oldRankRaw, oldRank: oldRank, newRank: newRank, shift: shift,
+      monthsAccel: monthsAccel, lifecycleYears: lifecycleYears,
+      approvalProb: approvalProb, repeatProb: repeatProb, discountRate: discountRate,
+      croCost: croCost, inHouseCost: inHouseCost, programmeCost: programmeCost,
+      revShareOld: revShareOld, revShareNew: revShareNew,
+      V1: V1, V2: V2, V3: V3, gross: gross, riskAdjusted: riskAdjusted,
+      roiMultiple: roiMultiple, npvRiskAdj: npvRiskAdj,
+      baseline: baseline, accelerated: accelerated
+    };
+  }
 
-    var barTotal = Math.max(0, V1) + Math.max(0, V2) + Math.max(0, V3);
-    els.barV1.style.width = (barTotal>0 ? Math.max(0,V1)/barTotal*100 : 0) + '%';
-    els.barV2.style.width = (barTotal>0 ? Math.max(0,V2)/barTotal*100 : 0) + '%';
-    els.barV3.style.width = (barTotal>0 ? Math.max(0,V3)/barTotal*100 : 0) + '%';
+  function recalc(){
+    var s = computeScenario();
 
-    els.v1out.textContent = fmtUSD(V1, sym);
-    els.v2out.textContent = fmtUSD(V2, sym);
-    els.v3out.textContent = fmtUSD(V3, sym);
-    els.grossOut.textContent = fmtUSD(gross, sym);
-    els.riskAdjOut.textContent = fmtUSD(riskAdjusted, sym);
-    els.npvOut.textContent = fmtUSD(npvRiskAdj, sym);
+    els.baselineDateOut.textContent = fmtMonth(s.baseline);
+    els.acceleratedDateOut.textContent = fmtMonth(s.accelerated);
+    els.rankShiftOut.textContent = ordinal(s.oldRankRaw>6?7:s.oldRank) + (s.oldRankRaw>6?'+':'') + ' → ' + ordinal(s.newRank);
+
+    els.headlineValue.textContent = fmtUSDCompactHeadline(s.riskAdjusted, s.sym);
+    els.roiMultiple.textContent = (isFinite(s.roiMultiple)?s.roiMultiple.toFixed(1):'0.0') + '×';
+
+    var barTotal = Math.max(0, s.V1) + Math.max(0, s.V2) + Math.max(0, s.V3);
+    els.barV1.style.width = (barTotal>0 ? Math.max(0,s.V1)/barTotal*100 : 0) + '%';
+    els.barV2.style.width = (barTotal>0 ? Math.max(0,s.V2)/barTotal*100 : 0) + '%';
+    els.barV3.style.width = (barTotal>0 ? Math.max(0,s.V3)/barTotal*100 : 0) + '%';
+
+    els.v1out.textContent = fmtUSD(s.V1, s.sym);
+    els.v2out.textContent = fmtUSD(s.V2, s.sym);
+    els.v3out.textContent = fmtUSD(s.V3, s.sym);
+    els.grossOut.textContent = fmtUSD(s.gross, s.sym);
+    els.riskAdjOut.textContent = fmtUSD(s.riskAdjusted, s.sym);
+    els.npvOut.textContent = fmtUSD(s.npvRiskAdj, s.sym);
 
     syncSliderDisplays();
+  }
+
+  function generatePDF(){
+    if (!window.jspdf || !window.jspdf.jsPDF){
+      alert('The PDF library did not load (check your connection). Try again in a moment.');
+      return;
+    }
+    var s = computeScenario();
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({ unit:'pt', format:'a4' });
+    var pageW = doc.internal.pageSize.getWidth();
+    var pageH = doc.internal.pageSize.getHeight();
+    var margin = 44;
+    var y = margin;
+
+    var ink = [26,39,64], soft = [84,98,122], faint = [150,150,150],
+        accent = [13,110,104], gold = [125,79,12], line = [225,221,208],
+        panel = [250,247,240];
+
+    function drawFooter(){
+      var page = doc.internal.getNumberOfPages();
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(faint[0],faint[1],faint[2]);
+      doc.text('KMS Pharma, BA/BE Acceleration ROI Model. Illustrative model, not a guarantee.', margin, pageH-26);
+      doc.text('Page ' + page, pageW-margin, pageH-26, {align:'right'});
+    }
+    function ensureSpace(h){
+      if (y + h > pageH - 60){
+        drawFooter();
+        doc.addPage();
+        y = margin;
+      }
+    }
+    function heading(num, title){
+      ensureSpace(28);
+      doc.setFont('helvetica','bold'); doc.setFontSize(12.5); doc.setTextColor(ink[0],ink[1],ink[2]);
+      doc.text(num + '. ' + title, margin, y);
+      y += 12;
+    }
+
+    // ---- Header ----
+    var headerBottom = y;
+    try {
+      var imgEl = document.querySelector('.brand-logo');
+      if (imgEl && imgEl.complete && imgEl.naturalWidth){
+        var canvas = document.createElement('canvas');
+        canvas.width = imgEl.naturalWidth; canvas.height = imgEl.naturalHeight;
+        canvas.getContext('2d').drawImage(imgEl, 0, 0);
+        var dataUrl = canvas.toDataURL('image/jpeg', 0.92);
+        var logoH = 24, logoW = logoH * (imgEl.naturalWidth / imgEl.naturalHeight);
+        doc.addImage(dataUrl, 'JPEG', margin, y, logoW, logoH);
+        headerBottom = Math.max(headerBottom, y + logoH);
+      }
+    } catch(e){ /* logo is a nice-to-have; continue without it */ }
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(soft[0],soft[1],soft[2]);
+    doc.text('BA/BE ACCELERATION ROI MODEL', pageW-margin, y+9, {align:'right'});
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(faint[0],faint[1],faint[2]);
+    doc.text('Generated ' + new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}), pageW-margin, y+21, {align:'right'});
+    headerBottom = Math.max(headerBottom, y + 24);
+
+    y = headerBottom + 14;
+    doc.setDrawColor(line[0],line[1],line[2]); doc.setLineWidth(0.75);
+    doc.line(margin, y, pageW-margin, y);
+    y += 26;
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(19); doc.setTextColor(ink[0],ink[1],ink[2]);
+    doc.text('Assumption-Backed ROI Breakdown', margin, y);
+    y += 19;
+    doc.setFont('helvetica','normal'); doc.setFontSize(10.5); doc.setTextColor(soft[0],soft[1],soft[2]);
+    doc.text(s.marketLabel + '   |   ' + s.dosageLabel + '   |   Reporting currency: ' + s.currency, margin, y);
+    y += 24;
+
+    // ---- Headline result box ----
+    var boxH = 76;
+    doc.setFillColor(panel[0],panel[1],panel[2]);
+    doc.setDrawColor(line[0],line[1],line[2]);
+    doc.roundedRect(margin, y, pageW-margin*2, boxH, 6, 6, 'FD');
+    var col1 = margin+18, col2 = margin+200, col3 = margin+380;
+    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(soft[0],soft[1],soft[2]);
+    doc.text('FILING MOVES', col1, y+20);
+    doc.text('RISK-ADJUSTED VALUE', col2, y+20);
+    doc.text('ROI MULTIPLE', col3, y+20);
+    doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(ink[0],ink[1],ink[2]);
+    doc.text(fmtMonth(s.baseline) + '  ->  ' + fmtMonth(s.accelerated), col1, y+44);
+    doc.setFontSize(19); doc.setTextColor(gold[0],gold[1],gold[2]);
+    doc.text(fmtUSDCompactHeadline(s.riskAdjusted, s.sym), col2, y+48);
+    doc.setTextColor(accent[0],accent[1],accent[2]);
+    doc.text((isFinite(s.roiMultiple)?s.roiMultiple.toFixed(1):'0.0') + 'x', col3, y+48);
+    y += boxH + 24;
+
+    // ---- 1. Inputs used ----
+    heading('1', 'Inputs Used');
+    doc.autoTable({
+      startY: y, margin: {left:margin, right:margin}, theme:'grid',
+      head: [['Parameter','Value']],
+      body: [
+        ['Target market', s.marketLabel],
+        ['Dosage form', s.dosageLabel],
+        ['Reporting currency', s.currency],
+        ['Annual market value', fmtUSD(s.marketValue, s.sym)],
+        ['Expected entrant position (no acceleration)', ordinal(s.oldRankRaw>6?7:s.oldRank) + (s.oldRankRaw>6?'+':'')],
+        ['Entrant-rank positions gained', String(s.shift)],
+        ['Gross margin', (s.grossMargin*100).toFixed(0)+'%'],
+        ['Months of acceleration', String(s.monthsAccel)],
+        ['Remaining product lifecycle', s.lifecycleYears + ' years'],
+        ['P(approval, first cycle)', (s.approvalProb*100).toFixed(0)+'%'],
+        ['P(repeat study)', (s.repeatProb*100).toFixed(0)+'%'],
+        ['Discount rate, r', (s.discountRate*100).toFixed(0)+'%'],
+        ['CRO study cost', fmtUSD(s.croCost, s.sym)],
+        ['KMS in-house study cost', fmtUSD(s.inHouseCost, s.sym)],
+        ['Incremental KMS programme cost', fmtUSD(s.programmeCost, s.sym)],
+        ['Baseline filing target (no acceleration)', fmtMonth(s.baseline)]
+      ],
+      styles: {font:'helvetica', fontSize:9, cellPadding:5.5, textColor:ink, lineColor:line, lineWidth:0.5},
+      headStyles: {fillColor:ink, textColor:[255,255,255], fontStyle:'bold'},
+      alternateRowStyles: {fillColor:panel},
+      columnStyles: {0:{cellWidth:270}}
+    });
+    y = doc.lastAutoTable.finalY + 26;
+
+    // ---- 2. Timeline bridge ----
+    heading('2', 'Timeline Bridge: Where the Months Come From');
+    doc.autoTable({
+      startY: y, margin: {left:margin, right:margin}, theme:'grid',
+      head: [['#','Step','Outsourced CRO','KMS In-House','Saving']],
+      body: [
+        ['1','CRO identification, RFP, quote comparison, MSA/contract execution','3-6 wks','0 (single contract)','~4 wks'],
+        ['2','Clinic slot queue / volunteer panel availability','4-8 wks','Scheduled at kick-off','~4 wks'],
+        ['3','Bioanalytical method development + validation','Sequential, post-contract','Parallel to formulation & pilot batches','~5 wks'],
+        ['4','Protocol finalisation + EC submission cycle','2 review rounds, external EC calendar','Drafted with Module 2.7.1; EC dates pre-blocked','~2 wks'],
+        ['5','Sample analysis + CSR turnaround','4-6 wks, sponsor queue','Prioritised; CSR authored to CTD directly','~3 wks'],
+        ['','Total','','','~18 wks (~4 months)']
+      ],
+      styles: {font:'helvetica', fontSize:8, cellPadding:5, textColor:ink, lineColor:line, lineWidth:0.5},
+      headStyles: {fillColor:accent, textColor:[255,255,255], fontStyle:'bold'},
+      alternateRowStyles: {fillColor:panel},
+      didParseCell: function(data){ if (data.row.index===5) data.cell.styles.fontStyle='bold'; }
+    });
+    y = doc.lastAutoTable.finalY + 12;
+    doc.setFont('helvetica','italic'); doc.setFontSize(7.5); doc.setTextColor(soft[0],soft[1],soft[2]);
+    var caveat = doc.splitTextToSize('If the pilot BE fails (industry-typical 20-30% for topicals, MR and high-variability drugs), the outsourced route restarts steps 1-2 (roughly 10-14 more weeks of re-contracting and re-queueing). In-house, it is a re-slot. The saving used above is a P50 of about 4 months, not a ceiling.', pageW-margin*2);
+    doc.text(caveat, margin, y);
+    y += caveat.length*9.5 + 22;
+
+    // ---- 3. Price & share curve ----
+    heading('3', 'Price & Share by Entrant Rank (' + s.marketLabel + ')');
+    var curveRows = [];
+    for (var i=0;i<6;i++){ curveRows.push([ (i+1)+(i===5?'+':''), curveState.P[i]+'%', curveState.S[i]+'%' ]); }
+    doc.autoTable({
+      startY: y, margin: {left:margin, right:margin}, theme:'grid', tableWidth:260,
+      head: [['Rank','Price, % of Brand','Share, %']],
+      body: curveRows,
+      styles: {font:'helvetica', fontSize:9, cellPadding:5.5, textColor:ink, lineColor:line, lineWidth:0.5},
+      headStyles: {fillColor:ink, textColor:[255,255,255], fontStyle:'bold'},
+      alternateRowStyles: {fillColor:panel}
+    });
+    y = doc.lastAutoTable.finalY + 26;
+
+    // ---- 4. Value breakdown ----
+    heading('4', 'Value Breakdown');
+    doc.autoTable({
+      startY: y, margin: {left:margin, right:margin}, theme:'grid',
+      head: [['Component','Formula','Value']],
+      body: [
+        ['V1: earlier revenue capture', 'Market x share at new rank x margin x months/12', fmtUSD(s.V1, s.sym)],
+        ['V2: entrant-rank shift', 'Market x (share at new rank - share at old rank) x margin x lifecycle', fmtUSD(s.V2, s.sym)],
+        ['V3: cost & risk avoidance', '(CRO cost - in-house cost) + P(repeat) x (CRO cost + delay value)', fmtUSD(s.V3, s.sym)],
+        ['Gross value', 'V1 + V2 + V3', fmtUSD(s.gross, s.sym)],
+        ['Risk-adjusted value', 'Gross value x P(approval, first cycle)', fmtUSD(s.riskAdjusted, s.sym)],
+        ['NPV, time-adjusted', 'Risk-adjusted cash flows discounted at r = ' + (s.discountRate*100).toFixed(0) + '%', fmtUSD(s.npvRiskAdj, s.sym)],
+        ['ROI multiple', 'Risk-adjusted value / incremental programme cost', (isFinite(s.roiMultiple)?s.roiMultiple.toFixed(1):'0.0') + 'x']
+      ],
+      styles: {font:'helvetica', fontSize:8.5, cellPadding:6, textColor:ink, lineColor:line, lineWidth:0.5},
+      headStyles: {fillColor:gold, textColor:[255,255,255], fontStyle:'bold'},
+      alternateRowStyles: {fillColor:panel},
+      columnStyles: {0:{cellWidth:118}, 1:{cellWidth:285}},
+      didParseCell: function(data){ if (data.row.index>=4){ data.cell.styles.fontStyle='bold'; } }
+    });
+    y = doc.lastAutoTable.finalY + 26;
+
+    // ---- 5. Facility credential + disclaimer ----
+    heading('5', 'KMS BA/BE Facility Credential');
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(soft[0],soft[1],soft[2]);
+    [
+      'USFDA / MHRA inspection status and history',
+      'Clinic capacity, volunteer panel size, EC registration',
+      'In-house bioanalytical + CTD dossier authoring under one roof'
+    ].forEach(function(line){
+      ensureSpace(15);
+      doc.text('- ' + line, margin, y);
+      y += 15;
+    });
+    y += 8;
+    ensureSpace(30);
+    doc.setFont('helvetica','italic'); doc.setFontSize(7.5); doc.setTextColor(faint[0],faint[1],faint[2]);
+    var legal = doc.splitTextToSize('Illustrative model built on typical industry timelines and price-erosion patterns. Actual timelines, approval odds and pricing depend on molecule-specific factors; figures here are planning estimates, not guarantees.', pageW-margin*2);
+    doc.text(legal, margin, y);
+
+    drawFooter();
+
+    var filename = 'KMS-BABE-ROI-' + s.market + '-' + s.dosage + '-' + new Date().toISOString().slice(0,10) + '.pdf';
+    doc.save(filename);
   }
 
   // ---- wiring ----
@@ -806,6 +1038,7 @@
   els.resetAdvanced = $('resetAdvanced');
   els.resetAdvanced.addEventListener('click', resetAdvancedOnly);
   $('loadDemo').addEventListener('click', loadDemo);
+  $('downloadPdf').addEventListener('click', generatePDF);
 
   els.leadForm.addEventListener('submit', function(e){
     e.preventDefault();
@@ -813,7 +1046,7 @@
     if (!email) return;
     var scenario = els.market.value + ' · ' + DOSAGE[els.dosage.value].label + ' · ' +
       fmtUSD(parseFloat(els.marketValue.value)||0, curSymbol()) + ' market · rank ' + els.entrantRank.value;
-    els.leadForm.innerHTML = '<div class="success">✓ &nbsp;Thanks — the breakdown for <strong>'+scenario+'</strong> is on its way to '+email+'. (Demo form: connect this to your CRM or form endpoint to send real email.)</div>';
+    els.leadForm.innerHTML = '<div class="success">✓ &nbsp;Thanks! The breakdown for <strong>'+scenario+'</strong> is on its way to '+email+'. (Demo form: connect this to your CRM or form endpoint to send real email.)</div>';
   });
 
   renderMarketOptions();
@@ -823,3 +1056,5 @@
   loadDemo();
 })();
 </script>
+</body>
+</html>
