@@ -956,6 +956,10 @@
       return;
     }
     var s = computeScenario();
+    // jsPDF's standard fonts only support WinAnsi encoding; symbols like the Rupee
+    // sign (₹) fall outside it and render corrupted. Use the ASCII-safe ISO code
+    // in the PDF for every currency instead of the Unicode symbol shown on-page.
+    var pdfSym = s.currency + ' ';
     var jsPDF = window.jspdf.jsPDF;
     var doc = new jsPDF({ unit:'pt', format:'a4' });
     var pageW = doc.internal.pageSize.getWidth();
@@ -1033,7 +1037,7 @@
     doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(ink[0],ink[1],ink[2]);
     doc.text(fmtMonth(s.baseline) + '  ->  ' + fmtMonth(s.accelerated), col1, y+44);
     doc.setFontSize(19); doc.setTextColor(gold[0],gold[1],gold[2]);
-    doc.text(fmtUSDCompactHeadline(s.riskAdjusted, s.sym), col2, y+48);
+    doc.text(fmtUSDCompactHeadline(s.riskAdjusted, pdfSym), col2, y+48);
     doc.setTextColor(accent[0],accent[1],accent[2]);
     doc.text((isFinite(s.roiMultiple)?s.roiMultiple.toFixed(1):'0.0') + 'x', col3, y+48);
     y += boxH + 24;
@@ -1047,7 +1051,7 @@
         ['Target market', s.marketLabel],
         ['Dosage form', s.dosageLabel],
         ['Reporting currency', s.currency],
-        ['Annual market value', fmtUSD(s.marketValue, s.sym)],
+        ['Annual market value', fmtUSD(s.marketValue, pdfSym)],
         ['Expected entrant position (no acceleration)', ordinal(s.oldRankRaw>6?7:s.oldRank) + (s.oldRankRaw>6?'+':'')],
         ['Entrant-rank positions gained', String(s.shift)],
         ['Gross margin', (s.grossMargin*100).toFixed(0)+'%'],
@@ -1056,9 +1060,9 @@
         ['P(approval, first cycle)', (s.approvalProb*100).toFixed(0)+'%'],
         ['P(repeat study)', (s.repeatProb*100).toFixed(0)+'%'],
         ['Discount rate, r', (s.discountRate*100).toFixed(0)+'%'],
-        ['CRO study cost', fmtUSD(s.croCost, s.sym)],
-        ['KMS in-house study cost', fmtUSD(s.inHouseCost, s.sym)],
-        ['Incremental KMS programme cost', fmtUSD(s.programmeCost, s.sym)],
+        ['CRO study cost', fmtUSD(s.croCost, pdfSym)],
+        ['KMS in-house study cost', fmtUSD(s.inHouseCost, pdfSym)],
+        ['Incremental KMS programme cost', fmtUSD(s.programmeCost, pdfSym)],
         ['Baseline filing target (no acceleration)', fmtMonth(s.baseline)]
       ],
       styles: {font:'helvetica', fontSize:9, cellPadding:5.5, textColor:ink, lineColor:line, lineWidth:0.5},
@@ -1112,12 +1116,12 @@
       startY: y, margin: {left:margin, right:margin}, theme:'grid',
       head: [['Component','Formula','Value']],
       body: [
-        ['V1: earlier revenue capture', 'Market x share at new rank x margin x months/12', fmtUSD(s.V1, s.sym)],
-        ['V2: entrant-rank shift', 'Market x (share at new rank - share at old rank) x margin x lifecycle', fmtUSD(s.V2, s.sym)],
-        ['V3: cost & risk avoidance', '(CRO cost - in-house cost) + P(repeat) x (CRO cost + delay value)', fmtUSD(s.V3, s.sym)],
-        ['Gross value', 'V1 + V2 + V3', fmtUSD(s.gross, s.sym)],
-        ['Risk-adjusted value', 'Gross value x P(approval, first cycle)', fmtUSD(s.riskAdjusted, s.sym)],
-        ['NPV, time-adjusted', 'Risk-adjusted cash flows discounted at r = ' + (s.discountRate*100).toFixed(0) + '%', fmtUSD(s.npvRiskAdj, s.sym)],
+        ['V1: earlier revenue capture', 'Market x share at new rank x margin x months/12', fmtUSD(s.V1, pdfSym)],
+        ['V2: entrant-rank shift', 'Market x (share at new rank - share at old rank) x margin x lifecycle', fmtUSD(s.V2, pdfSym)],
+        ['V3: cost & risk avoidance', '(CRO cost - in-house cost) + P(repeat) x (CRO cost + delay value)', fmtUSD(s.V3, pdfSym)],
+        ['Gross value', 'V1 + V2 + V3', fmtUSD(s.gross, pdfSym)],
+        ['Risk-adjusted value', 'Gross value x P(approval, first cycle)', fmtUSD(s.riskAdjusted, pdfSym)],
+        ['NPV, time-adjusted', 'Risk-adjusted cash flows discounted at r = ' + (s.discountRate*100).toFixed(0) + '%', fmtUSD(s.npvRiskAdj, pdfSym)],
         ['ROI multiple', 'Risk-adjusted value / incremental programme cost', (isFinite(s.roiMultiple)?s.roiMultiple.toFixed(1):'0.0') + 'x']
       ],
       styles: {font:'helvetica', fontSize:8.5, cellPadding:6, textColor:ink, lineColor:line, lineWidth:0.5},
