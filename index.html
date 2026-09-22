@@ -68,13 +68,14 @@
     padding:5px 11px; border-radius:100px; margin-bottom:18px;
   }
   .hook{
-    font-size:clamp(26px, 4vw, 40px);
-    font-weight:600; font-style:italic;
+    font-size:clamp(30px, 4.6vw, 50px);
+    font-weight:700; font-style:normal;
     color:var(--text);
-    max-width:16ch;
+    max-width:34ch;
     margin-bottom:18px;
+    letter-spacing:-0.012em;
   }
-  .hook em{color:var(--gold-strong); font-style:italic;}
+  .hook em{color:var(--gold-strong); font-style:normal;}
   .sub{
     font-size:16.5px; color:var(--text-soft); max-width:62ch; margin-bottom:6px;
   }
@@ -92,6 +93,11 @@
   .bridge-total b{color:var(--gold-strong); font-family:'IBM Plex Mono',monospace;}
 
   .track-row{display:grid; grid-template-columns:118px 1fr; gap:14px; align-items:center; margin-bottom:10px;}
+  @media (max-width:560px){
+    .track-row{grid-template-columns:1fr; gap:6px;}
+    .gap-note{grid-column:1;}
+    .seg span{display:none;}
+  }
   .track-label{font-size:12.5px; font-weight:600; color:var(--text-soft);}
   .track{position:relative; height:34px; border-radius:8px; background:var(--surface-2); overflow:hidden; display:flex;}
   .seg{height:100%; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; border-right:1px solid rgba(255,255,255,.35);}
@@ -114,12 +120,40 @@
   details.bridge-table summary::-webkit-details-marker{display:none;}
   details.bridge-table summary::before{content:'▸'; font-size:11px; transition:transform .15s;}
   details.bridge-table[open] summary::before{transform:rotate(90deg);}
-  .bt-wrap{overflow-x:auto; margin-top:14px;}
-  table.bt{border-collapse:collapse; width:100%; font-size:13px; min-width:640px;}
-  table.bt th, table.bt td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--border-soft); vertical-align:top;}
-  table.bt th{font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-faint); font-weight:600;}
-  table.bt td.n{font-family:'IBM Plex Mono',monospace; white-space:nowrap;}
-  table.bt tr.total td{font-weight:700; border-bottom:none; border-top:2px solid var(--border);}
+
+  .bridge-rows{margin-top:14px;}
+  .b-row{
+    display:grid; grid-template-columns:34px 1fr auto; gap:16px; align-items:center;
+    padding:14px 0; border-bottom:1px solid var(--border-soft);
+  }
+  .b-row:first-child{padding-top:4px;}
+  .b-num{
+    width:30px; height:30px; border-radius:50%; background:var(--surface-2); color:var(--text-soft);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12.5px;
+    font-family:'IBM Plex Mono',monospace; flex:none;
+  }
+  .b-step{font-size:13px; color:var(--text); margin-bottom:9px; font-weight:500; line-height:1.4;}
+  .b-compare{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .b-pill{
+    font-size:11px; font-weight:600; padding:4px 10px; border-radius:100px;
+    font-family:'IBM Plex Mono',monospace; white-space:nowrap; letter-spacing:.01em;
+  }
+  .b-pill.before{background:var(--danger-soft); color:var(--danger);}
+  .b-pill.after{background:var(--accent-soft); color:var(--accent-strong);}
+  .b-arrow{color:var(--text-faint); font-size:12px; flex:none;}
+  .b-save{
+    display:inline-flex; align-items:baseline; gap:4px; font-family:'IBM Plex Mono',monospace;
+    font-weight:700; font-size:12.5px; color:var(--gold-strong); background:var(--gold-soft);
+    padding:6px 12px; border-radius:100px; white-space:nowrap; justify-self:end;
+  }
+  .b-row.b-total{border-bottom:none; padding-top:18px;}
+  .b-row.b-total .b-num{background:var(--text); color:#fff;}
+  .b-row.b-total .b-step{font-weight:700; margin-bottom:0; font-size:14px;}
+  .b-row.b-total .b-save{font-size:15px; padding:8px 16px;}
+  @media (max-width:600px){
+    .b-row{grid-template-columns:30px 1fr; row-gap:10px;}
+    .b-save{grid-column:1/-1; justify-self:start; margin-left:46px;}
+  }
   .caveat{font-size:12px; color:var(--text-faint); margin-top:14px; max-width:70ch;}
 
   /* ---------- calculator ---------- */
@@ -255,23 +289,79 @@
     </div>
     <div class="track-row">
       <div></div>
-      <div class="gap-note">≈ 18 weeks ≈ 4 months reclaimed on the critical path</div>
+      <div class="gap-note">≈ <span class="num" id="gapWk">0</span> weeks ≈ 4 months reclaimed on the critical path</div>
     </div>
 
     <details class="bridge-table" open>
       <summary>Show the 5-step bridge, line by line</summary>
-      <div class="bt-wrap">
-        <table class="bt">
-          <thead><tr><th>#</th><th>Step</th><th>Outsourced CRO</th><th>KMS in-house</th><th>Saving</th></tr></thead>
-          <tbody>
-            <tr><td class="num">1</td><td>CRO identification, RFP, quote comparison, MSA/contract execution</td><td class="n">3–6 wks</td><td class="n">0 (single contract)</td><td class="n">~4 wks</td></tr>
-            <tr><td class="num">2</td><td>Clinic slot queue / volunteer panel availability</td><td class="n">4–8 wks</td><td class="n">Scheduled at kick-off</td><td class="n">~4 wks</td></tr>
-            <tr><td class="num">3</td><td>Bioanalytical method development + validation</td><td class="n">Sequential, post-contract</td><td class="n">Parallel to formulation &amp; pilot batches</td><td class="n">~5 wks</td></tr>
-            <tr><td class="num">4</td><td>Protocol finalisation + EC submission cycle</td><td class="n">2 review rounds, external EC calendar</td><td class="n">Drafted with Module 2.7.1; EC dates pre-blocked</td><td class="n">~2 wks</td></tr>
-            <tr><td class="num">5</td><td>Sample analysis + CSR turnaround</td><td class="n">4–6 wks, sponsor queue</td><td class="n">Prioritised; CSR authored to CTD directly</td><td class="n">~3 wks</td></tr>
-            <tr class="total"><td></td><td>Total</td><td></td><td></td><td class="n">~18 wks ≈ 4 months</td></tr>
-          </tbody>
-        </table>
+      <div class="bridge-rows" id="bridgeRows">
+        <div class="b-row" data-save="4">
+          <div class="b-num">1</div>
+          <div>
+            <div class="b-step">CRO identification, RFP, quote comparison, MSA/contract execution</div>
+            <div class="b-compare">
+              <span class="b-pill before">3–6 wks</span>
+              <span class="b-arrow">→</span>
+              <span class="b-pill after">0 (single contract)</span>
+            </div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks</div>
+        </div>
+        <div class="b-row" data-save="4">
+          <div class="b-num">2</div>
+          <div>
+            <div class="b-step">Clinic slot queue / volunteer panel availability</div>
+            <div class="b-compare">
+              <span class="b-pill before">4–8 wks</span>
+              <span class="b-arrow">→</span>
+              <span class="b-pill after">Scheduled at kick-off</span>
+            </div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks</div>
+        </div>
+        <div class="b-row" data-save="5">
+          <div class="b-num">3</div>
+          <div>
+            <div class="b-step">Bioanalytical method development + validation</div>
+            <div class="b-compare">
+              <span class="b-pill before">Sequential, post-contract</span>
+              <span class="b-arrow">→</span>
+              <span class="b-pill after">Parallel to formulation &amp; pilot batches</span>
+            </div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks</div>
+        </div>
+        <div class="b-row" data-save="2">
+          <div class="b-num">4</div>
+          <div>
+            <div class="b-step">Protocol finalisation + EC submission cycle</div>
+            <div class="b-compare">
+              <span class="b-pill before">2 review rounds, external EC calendar</span>
+              <span class="b-arrow">→</span>
+              <span class="b-pill after">Drafted with Module 2.7.1; EC dates pre-blocked</span>
+            </div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks</div>
+        </div>
+        <div class="b-row" data-save="3">
+          <div class="b-num">5</div>
+          <div>
+            <div class="b-step">Sample analysis + CSR turnaround</div>
+            <div class="b-compare">
+              <span class="b-pill before">4–6 wks, sponsor queue</span>
+              <span class="b-arrow">→</span>
+              <span class="b-pill after">Prioritised; CSR authored to CTD directly</span>
+            </div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks</div>
+        </div>
+        <div class="b-row b-total" data-save="18">
+          <div class="b-num">Σ</div>
+          <div>
+            <div class="b-step">Total critical-path saving</div>
+          </div>
+          <div class="b-save">+<span class="b-save-num">0</span> wks ≈ 4 months</div>
+        </div>
       </div>
       <p class="caveat">If the pilot BE fails (industry-typical 20–30% for topicals, MR and high-variability drugs), the outsourced route restarts steps 1–2 (≈10–14 more weeks of re-contracting and re-queueing). In-house, it's a re-slot. That's why the saving used below is a <strong>P50 of ~4 months</strong>, not a ceiling: state it as a range, not a guarantee.</p>
     </details>
@@ -567,8 +657,38 @@
     });
     els.croTrack.innerHTML = croHtml;
     els.kmsTrack.innerHTML = '<div class="seg" style="width:100%"><span>Parallelised, pre-scheduled in-house workflow</span></div>';
-    els.croTotalWk.textContent = CRO_TOTAL;
-    els.kmsTotalWk.textContent = KMS_TOTAL;
+  }
+
+  function animateCount(el, target, opts){
+    if (!el) return;
+    opts = opts || {};
+    var duration = opts.duration || 900;
+    var delay = opts.delay || 0;
+    var suffix = opts.suffix || '';
+    setTimeout(function(){
+      var start = null;
+      function step(ts){
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / duration);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target + suffix;
+      }
+      requestAnimationFrame(step);
+    }, delay);
+  }
+
+  function runBridgeTickers(){
+    animateCount(els.croTotalWk, CRO_TOTAL, { duration: 900 });
+    animateCount(els.kmsTotalWk, KMS_TOTAL, { duration: 900, delay: 150 });
+    animateCount($('gapWk'), SAVE_TOTAL, { duration: 1000, delay: 300 });
+
+    var rows = document.querySelectorAll('#bridgeRows .b-row');
+    Array.prototype.forEach.call(rows, function(row, i){
+      var target = parseFloat(row.dataset.save) || 0;
+      animateCount(row.querySelector('.b-save-num'), target, { duration: 700, delay: 200 + i*120 });
+    });
   }
 
   function fmtUSD(n, sym){
@@ -987,6 +1107,23 @@
   renderBridge();
   renderCurveTable();
   loadDemo();
+
+  var bridgeEl = document.querySelector('.bridge');
+  if (bridgeEl && 'IntersectionObserver' in window){
+    var tickersFired = false;
+    var bridgeObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting && !tickersFired){
+          tickersFired = true;
+          runBridgeTickers();
+          bridgeObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    bridgeObserver.observe(bridgeEl);
+  } else {
+    runBridgeTickers();
+  }
 })();
 </script>
 </body>
