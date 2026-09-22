@@ -248,10 +248,41 @@
 
   .breakdown{border-top:1px solid var(--border-soft); padding-top:16px;}
   .bd-row{display:flex; justify-content:space-between; align-items:baseline; font-size:13.5px; padding:6px 0;}
+  .bd-row .label-wrap{display:inline-flex; align-items:center; gap:6px; position:relative;}
   .bd-row .label{color:var(--text-soft);}
   .bd-row .val{font-weight:600;}
   .bd-row.total{border-top:1px solid var(--border-soft); margin-top:6px; padding-top:12px; font-size:14.5px;}
   .bd-row.total .val{color:var(--gold-strong);}
+
+  .info-btn{
+    width:15px; height:15px; border-radius:50%; border:1px solid var(--border);
+    background:var(--surface-2); color:var(--text-faint); font-size:9.5px; font-weight:700;
+    font-family:'IBM Plex Sans', sans-serif; line-height:1; cursor:pointer; padding:0;
+    display:inline-flex; align-items:center; justify-content:center; flex:none; position:relative;
+  }
+  .info-btn:hover, .info-btn:focus-visible, .info-btn.show{
+    background:var(--accent-soft); color:var(--accent-strong); border-color:var(--accent);
+  }
+  .info-tip{
+    position:absolute; left:0; bottom:calc(100% + 8px); z-index:20;
+    width:230px; max-width:64vw; background:var(--text); color:#fff;
+    font-size:11.5px; font-weight:400; line-height:1.5; padding:9px 11px; border-radius:8px;
+    text-align:left; white-space:normal;
+    opacity:0; visibility:hidden; transform:translateY(4px); pointer-events:none;
+    transition:opacity .15s ease, transform .15s ease, visibility .15s;
+    box-shadow:var(--shadow);
+  }
+  .info-tip::after{
+    content:''; position:absolute; top:100%; left:6px;
+    border:5px solid transparent; border-top-color:var(--text);
+  }
+  .info-btn:hover .info-tip, .info-btn:focus-visible .info-tip, .info-btn.show .info-tip{
+    opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto;
+  }
+  @media (max-width:420px){
+    .info-tip{left:auto; right:-30px;}
+    .info-tip::after{left:auto; right:36px;}
+  }
   .bd-note{font-size:11.5px; color:var(--text-faint); margin-top:14px; line-height:1.5;}
 
   .btn{
@@ -524,12 +555,30 @@
       </div>
 
       <div class="breakdown">
-        <div class="bd-row"><span class="label">V1: earlier revenue capture</span><span class="val num" id="v1out">$0</span></div>
-        <div class="bd-row"><span class="label">V2: entrant-rank shift</span><span class="val num" id="v2out">$0</span></div>
-        <div class="bd-row"><span class="label">V3: cost &amp; risk avoidance</span><span class="val num" id="v3out">$0</span></div>
-        <div class="bd-row"><span class="label">Gross value</span><span class="val num" id="grossOut">$0</span></div>
-        <div class="bd-row"><span class="label">Risk-adjusted (× P(approval))</span><span class="val num" id="riskAdjOut">$0</span></div>
-        <div class="bd-row total"><span class="label">NPV at r, time-adjusted</span><span class="val num" id="npvOut">$0</span></div>
+        <div class="bd-row">
+          <span class="label-wrap"><span class="label">V1: earlier revenue capture</span><button type="button" class="info-btn" aria-label="What is V1?">i<span class="info-tip" role="tooltip">Extra profit from selling sooner: market value × your price and share at the new rank × margin × months gained ÷ 12.</span></button></span>
+          <span class="val num" id="v1out">$0</span>
+        </div>
+        <div class="bd-row">
+          <span class="label-wrap"><span class="label">V2: entrant-rank shift</span><button type="button" class="info-btn" aria-label="What is V2?">i<span class="info-tip" role="tooltip">The value of permanently landing a better price and market share for the rest of the product's life, not just for a few months. Usually the biggest number here.</span></button></span>
+          <span class="val num" id="v2out">$0</span>
+        </div>
+        <div class="bd-row">
+          <span class="label-wrap"><span class="label">V3: cost &amp; risk avoidance</span><button type="button" class="info-btn" aria-label="What is V3?">i<span class="info-tip" role="tooltip">What you save versus an outside vendor, plus the cost and delay avoided if a repeat study is needed.</span></button></span>
+          <span class="val num" id="v3out">$0</span>
+        </div>
+        <div class="bd-row">
+          <span class="label-wrap"><span class="label">Gross value</span><button type="button" class="info-btn" aria-label="What is gross value?">i<span class="info-tip" role="tooltip">V1 + V2 + V3 added together, before accounting for approval risk.</span></button></span>
+          <span class="val num" id="grossOut">$0</span>
+        </div>
+        <div class="bd-row">
+          <span class="label-wrap"><span class="label">Risk-adjusted (× P(approval))</span><button type="button" class="info-btn" aria-label="What is risk-adjusted value?">i<span class="info-tip" role="tooltip">Gross value × the odds the filing is approved on the first cycle. This is the headline number above.</span></button></span>
+          <span class="val num" id="riskAdjOut">$0</span>
+        </div>
+        <div class="bd-row total">
+          <span class="label-wrap"><span class="label">NPV at r, time-adjusted</span><button type="button" class="info-btn" aria-label="What is NPV?">i<span class="info-tip" role="tooltip">A more conservative figure: future years of value are discounted back to today's terms at the discount rate you set.</span></button></span>
+          <span class="val num" id="npvOut">$0</span>
+        </div>
       </div>
       <p class="bd-note">Up to ~4 months on a typical first-time filing, based on the 5-step bridge above. V2 is usually the number that lands hardest. It isn't extra speed, it's a permanent shift in who you are on the shelf.</p>
       <button type="button" class="btn" id="downloadPdf" style="width:100%; margin-top:18px;">Download PDF report</button>
@@ -1136,6 +1185,22 @@
   els.resetAdvanced.addEventListener('click', resetAdvancedOnly);
   $('loadDemo').addEventListener('click', loadDemo);
   $('downloadPdf').addEventListener('click', generatePDF);
+
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest ? e.target.closest('.info-btn') : null;
+    Array.prototype.forEach.call(document.querySelectorAll('.info-btn.show'), function(b){
+      if (b !== btn) b.classList.remove('show');
+    });
+    if (btn){
+      btn.classList.toggle('show');
+      e.stopPropagation();
+    }
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){
+      Array.prototype.forEach.call(document.querySelectorAll('.info-btn.show'), function(b){ b.classList.remove('show'); });
+    }
+  });
 
   renderMarketOptions();
   renderCurrencyOptions();
