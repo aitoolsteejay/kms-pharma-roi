@@ -726,6 +726,7 @@
   }
 
   var UNLOCK_KEY = 'kms_roi_unlocked';
+  var STATE_KEY = 'kms_roi_state';
   function isUnlocked(){
     try { return localStorage.getItem(UNLOCK_KEY) === '1'; } catch(e){ return false; }
   }
@@ -735,6 +736,59 @@
   function goToStep(n){
     els.calcGrid.dataset.step = String(n);
     if (n === 3) recalc();
+  }
+
+  function saveState(){
+    try {
+      var state = {
+        market: els.market.value, currency: els.currency.value, dosage: els.dosage.value,
+        marketValue: els.marketValue.value, entrantRank: els.entrantRank.value, grossMargin: els.grossMarginRange.value,
+        monthsAccel: els.monthsAccel.value, rankShift: els.rankShift.value, lifecycle: els.lifecycle.value,
+        approvalProb: els.approvalProb.value, repeatProb: els.repeatProb.value, discountRate: els.discountRate.value,
+        croCost: els.croCost.value, inHouseCost: els.inHouseCost.value, programmeCost: els.programmeCost.value,
+        baselineFiling: els.baselineFiling.value,
+        curveP: curveState.P, curveS: curveState.S,
+        autoFlags: {
+          repeatProb: els.repeatProb.dataset.auto, croCost: els.croCost.dataset.auto,
+          inHouseCost: els.inHouseCost.dataset.auto, programmeCost: els.programmeCost.dataset.auto
+        }
+      };
+      localStorage.setItem(STATE_KEY, JSON.stringify(state));
+    } catch(e){ /* per-viewer convenience only */ }
+  }
+
+  function restoreState(){
+    try {
+      var raw = localStorage.getItem(STATE_KEY);
+      if (!raw) return false;
+      var s = JSON.parse(raw);
+      if (!s || !s.market || !MARKETS[s.market]) return false;
+      els.market.value = s.market;
+      els.currency.value = s.currency || MARKETS[s.market].currency;
+      els.dosage.value = s.dosage || 'oral_solid';
+      els.marketValue.value = s.marketValue;
+      els.marketValueRange.value = s.marketValue;
+      els.entrantRank.value = s.entrantRank;
+      els.grossMarginRange.value = s.grossMargin;
+      els.monthsAccel.value = s.monthsAccel;
+      els.rankShift.value = s.rankShift;
+      els.lifecycle.value = s.lifecycle;
+      els.approvalProb.value = s.approvalProb;
+      els.repeatProb.value = s.repeatProb;
+      els.discountRate.value = s.discountRate;
+      els.croCost.value = s.croCost;
+      els.inHouseCost.value = s.inHouseCost;
+      els.programmeCost.value = s.programmeCost;
+      els.baselineFiling.value = s.baselineFiling;
+      curveState.P = (s.curveP && s.curveP.length===6) ? s.curveP.slice() : MARKETS[s.market].P.slice();
+      curveState.S = (s.curveS && s.curveS.length===6) ? s.curveS.slice() : S_DEFAULT.slice();
+      if (s.autoFlags){
+        ['repeatProb','croCost','inHouseCost','programmeCost'].forEach(function(id){
+          els[id].dataset.auto = s.autoFlags[id] || 'true';
+        });
+      }
+      return true;
+    } catch(e){ return false; }
   }
 
   function defaultMonthInput(monthsFromNow){
@@ -1001,6 +1055,7 @@
     els.npvOut.textContent = fmtUSD(s.npvRiskAdj, s.sym);
 
     syncSliderDisplays();
+    if (isUnlocked()) saveState();
   }
 
   function generatePDF(){
@@ -1272,8 +1327,15 @@
   renderMarketOptions();
   renderCurrencyOptions();
   renderCurveTable();
-  loadDemo();
-  if (isUnlocked()) goToStep(3);
+  if (isUnlocked() && restoreState()){
+    renderCurveTable();
+    updateCurrencyLabels();
+    syncSliderDisplays();
+    goToStep(3);
+  } else {
+    loadDemo();
+    if (isUnlocked()) goToStep(3);
+  }
 
   var bridgeEl = document.querySelector('.bridge');
   if (bridgeEl && 'IntersectionObserver' in window){
