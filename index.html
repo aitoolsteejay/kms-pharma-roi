@@ -123,6 +123,7 @@
   details.bridge-table summary{
     cursor:pointer; font-size:13px; font-weight:600; color:var(--accent-strong);
     list-style:none; display:flex; align-items:center; gap:6px;
+    padding-block:11px; min-height:44px; box-sizing:border-box;
   }
   details.bridge-table summary::-webkit-details-marker{display:none;}
   details.bridge-table summary::before{content:'▸'; font-size:11px; transition:transform .15s;}
@@ -188,7 +189,11 @@
   .section-head{margin-bottom:22px;}
   .section-head h2{font-size:24px; font-weight:600;}
   .section-head p{color:var(--text-soft); font-size:14.5px; margin-top:6px;}
-  .demo-link{background:none; border:none; padding:0; font-size:12.5px; color:var(--accent-strong); text-decoration:underline; cursor:pointer;}
+  .demo-link{
+    background:none; border:none; font-size:12.5px; color:var(--accent-strong);
+    text-decoration:underline; cursor:pointer; padding:10px 0; min-height:44px;
+    display:inline-flex; align-items:center;
+  }
 
   .calc-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,420px); gap:22px; align-items:start;}
   @media (max-width:860px){ .calc-grid{grid-template-columns:1fr;} .output{position:static; top:auto;} }
@@ -209,6 +214,7 @@
   .gate-back{
     background:none; border:none; margin-top:16px; font-size:12.5px;
     color:var(--text-faint); text-decoration:underline; cursor:pointer;
+    padding:12px; min-height:44px; display:inline-flex; align-items:center; justify-content:center;
   }
 
   .panel{
@@ -228,13 +234,13 @@
   @media (max-width:480px){ .row2{grid-template-columns:1fr;} }
   .currency-row{display:flex; align-items:center; gap:8px; margin-top:8px;}
   .currency-label{font-size:11px; color:var(--text-faint); font-weight:600; flex:none;}
-  .currency-row select{padding:6px 8px; font-size:12.5px; width:auto; flex:1;}
+  .currency-row select{padding:10px 8px; font-size:12.5px; width:auto; flex:1; min-height:44px;}
   .slider-row{display:flex; align-items:center; gap:12px;}
   input[type="range"]{flex:1; accent-color:var(--accent);}
   .slider-val{font-family:'IBM Plex Mono',monospace; font-size:13.5px; font-weight:600; min-width:52px; text-align:right;}
 
   details.adv{margin-top:6px; border-top:1px solid var(--border-soft); padding-top:16px;}
-  details.adv summary{cursor:pointer; font-size:13px; font-weight:600; color:var(--accent-strong); list-style:none; display:flex; align-items:center; gap:6px;}
+  details.adv summary{cursor:pointer; font-size:13px; font-weight:600; color:var(--accent-strong); list-style:none; display:flex; align-items:center; gap:6px; padding-block:11px; min-height:44px; box-sizing:border-box;}
   details.adv summary::-webkit-details-marker{display:none;}
   details.adv summary::before{content:'▸'; font-size:11px; transition:transform .15s;}
   details.adv[open] summary::before{transform:rotate(90deg);}
@@ -247,7 +253,10 @@
   .curve-table td{padding:3px 6px;}
   .curve-table input{padding:5px 6px; font-size:12.5px; text-align:right;}
   .reset-row{margin-top:16px; text-align:right;}
-  .reset-row button{background:none; border:none; font-size:12px; color:var(--text-faint); text-decoration:underline; cursor:pointer;}
+  .reset-row button{
+    background:none; border:none; font-size:12px; color:var(--text-faint);
+    text-decoration:underline; cursor:pointer; padding:12px; min-height:44px;
+  }
 
   /* ---------- output card ---------- */
   .output{
@@ -294,6 +303,10 @@
     font-family:'IBM Plex Sans', sans-serif; line-height:1; cursor:pointer; padding:0;
     display:inline-flex; align-items:center; justify-content:center; flex:none; position:relative;
   }
+  .info-btn::before{
+    content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:36px; height:36px;
+  }
   .info-btn:hover, .info-btn:focus-visible, .info-btn.show{
     background:var(--accent-soft); color:var(--accent-strong); border-color:var(--accent);
   }
@@ -321,7 +334,8 @@
 
   .btn{
     background:var(--accent); color:#fff; border:none; border-radius:9px;
-    padding:11px 16px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap;
+    padding:13px 16px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap;
+    min-height:44px;
   }
   .btn:hover{background:var(--accent-strong);}
 
