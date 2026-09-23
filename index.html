@@ -193,6 +193,24 @@
   .calc-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(320px,420px); gap:22px; align-items:start;}
   @media (max-width:860px){ .calc-grid{grid-template-columns:1fr;} .output{position:static; top:auto;} }
 
+  .calc-grid[data-step="1"]{grid-template-columns:1fr; max-width:640px; margin-inline:auto;}
+  .calc-grid[data-step="1"] .lead-gate, .calc-grid[data-step="1"] .output{display:none;}
+  .calc-grid[data-step="2"]{grid-template-columns:1fr; max-width:460px; margin-inline:auto;}
+  .calc-grid[data-step="2"] .panel, .calc-grid[data-step="2"] .output{display:none;}
+  .calc-grid[data-step="3"] .lead-gate, .calc-grid[data-step="3"] #seeResultsBtn{display:none;}
+
+  .lead-gate{
+    background:var(--surface); border:1px solid var(--border-soft); border-radius:16px;
+    padding:32px; box-shadow:var(--shadow); text-align:center;
+  }
+  .lead-gate h3{font-size:20px; margin-block:10px 8px;}
+  .lead-gate p{color:var(--text-soft); font-size:14px; margin-bottom:20px;}
+  .lead-gate input[type="email"]{text-align:center;}
+  .gate-back{
+    background:none; border:none; margin-top:16px; font-size:12.5px;
+    color:var(--text-faint); text-decoration:underline; cursor:pointer;
+  }
+
   .panel{
     background:var(--surface); border:1px solid var(--border-soft); border-radius:16px;
     padding:24px; box-shadow:var(--shadow);
@@ -410,7 +428,7 @@
     <p>Five inputs drive it. Everything else (erosion curves, repeat-study risk, discount rate) is a defaults set you can open and edit. <button class="demo-link" id="loadDemo" type="button">Reload the US ANDA demo</button></p>
   </div>
 
-  <div class="calc-grid">
+  <div class="calc-grid" id="calcGrid" data-step="1">
     <div class="panel">
       <div class="row2">
         <div class="field">
@@ -527,9 +545,22 @@
           <div class="reset-row"><button type="button" id="resetAdvanced">Reset advanced assumptions to market defaults</button></div>
         </div>
       </details>
+
+      <button type="button" class="btn" id="seeResultsBtn" style="width:100%; margin-top:22px;">See what this is worth →</button>
     </div>
 
-    <div class="output">
+    <div class="lead-gate" id="leadGate">
+      <div class="output-eyebrow">One last step</div>
+      <h3>Where should we show your numbers?</h3>
+      <p>Enter your work email and we'll unlock the risk-adjusted value, ROI multiple and full breakdown for this exact scenario.</p>
+      <form id="gateForm">
+        <input type="email" id="gateEmail" placeholder="you@company.com" required>
+        <button type="submit" class="btn" style="width:100%; margin-top:10px;">Show my results →</button>
+      </form>
+      <button type="button" class="gate-back" id="gateBack">← Back to inputs</button>
+    </div>
+
+    <div class="output" id="outputCard">
       <div class="output-eyebrow">Estimated impact</div>
       <div class="filing-shift">Filing moves from <b id="baselineDateOut">...</b> <span class="filing-arrow">→</span> <b id="acceleratedDateOut">...</b></div>
       <div class="filing-shift" style="margin-bottom:0;">Entrant position: <b id="rankShiftOut">6th → 4th</b></div>
@@ -655,7 +686,8 @@
    'croCost','inHouseCost','programmeCost','baselineFiling','curveBody',
    'baselineDateOut','acceleratedDateOut','rankShiftOut','headlineValue','roiMultiple',
    'barV1','barV2','barV3','v1out','v2out','v3out','grossOut','riskAdjOut','npvOut',
-   'baLabel','baFill','baNum','baSaved'
+   'baLabel','baFill','baNum','baSaved',
+   'calcGrid','seeResultsBtn','leadGate','gateForm','gateEmail','gateBack'
   ].forEach(function(id){ els[id] = $(id); });
 
   function renderMarketOptions(){
@@ -677,6 +709,18 @@
       var el = $(id);
       if (el) el.textContent = code;
     });
+  }
+
+  var UNLOCK_KEY = 'kms_roi_unlocked';
+  function isUnlocked(){
+    try { return localStorage.getItem(UNLOCK_KEY) === '1'; } catch(e){ return false; }
+  }
+  function setUnlocked(){
+    try { localStorage.setItem(UNLOCK_KEY, '1'); } catch(e){ /* per-viewer convenience only; step state still works this session */ }
+  }
+  function goToStep(n){
+    els.calcGrid.dataset.step = String(n);
+    if (n === 3) recalc();
   }
 
   function defaultMonthInput(monthsFromNow){
@@ -1185,6 +1229,16 @@
   $('loadDemo').addEventListener('click', loadDemo);
   $('downloadPdf').addEventListener('click', generatePDF);
 
+  els.seeResultsBtn.addEventListener('click', function(){ goToStep(2); });
+  els.gateBack.addEventListener('click', function(){ goToStep(1); });
+  els.gateForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = els.gateEmail.value.trim();
+    if (!email) return;
+    setUnlocked();
+    goToStep(3);
+  });
+
   document.addEventListener('click', function(e){
     var btn = e.target.closest ? e.target.closest('.info-btn') : null;
     Array.prototype.forEach.call(document.querySelectorAll('.info-btn.show'), function(b){
@@ -1205,6 +1259,7 @@
   renderCurrencyOptions();
   renderCurveTable();
   loadDemo();
+  if (isUnlocked()) goToStep(3);
 
   var bridgeEl = document.querySelector('.bridge');
   if (bridgeEl && 'IntersectionObserver' in window){
