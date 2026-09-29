@@ -58,6 +58,20 @@
   .brand-text{font-size:13.5px; color:var(--text-soft); border-left:1px solid var(--border); padding-left:12px;}
   .brand-text strong{color:var(--text); font-weight:600;}
   .topbar-note{font-size:12.5px; color:var(--text-faint);}
+  .topbar-right{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .topbar-cta{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--accent); color:#fff; font-size:12.5px; font-weight:600;
+    padding:9px 15px; border-radius:8px; text-decoration:none; white-space:nowrap;
+    min-height:36px;
+  }
+  .topbar-cta:hover{background:var(--accent-strong);}
+  .hero-cta-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:14px; font-weight:600; color:var(--accent-strong);
+    text-decoration:none; margin-top:8px;
+  }
+  .hero-cta-link:hover{text-decoration:underline;}
 
   /* ---------- hero ---------- */
   .hero{padding-block:52px 30px;}
@@ -339,6 +353,8 @@
     min-height:44px;
   }
   .btn:hover{background:var(--accent-strong);}
+  .btn-secondary{background:var(--surface-2); color:var(--text);}
+  .btn-secondary:hover{background:var(--border-soft);}
 
   footer{border-top:1px solid var(--border-soft); padding-block:26px 40px;}
   .foot-grid{display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-start;}
@@ -355,7 +371,10 @@
       <img class="brand-logo" src="assets/kms-logo-cropped.jpeg" alt="KMS Pharma">
       <div class="brand-text">BA/BE &amp; Dossier Development</div>
     </div>
-    <div class="topbar-note">Built for formulation, regulatory &amp; BD leads</div>
+    <div class="topbar-right">
+      <div class="topbar-note">Built for formulation, regulatory &amp; BD leads</div>
+      <a class="topbar-cta" href="https://bookings.cloud.microsoft/bookwithme/user/06b9a3e9ce3c46a4a5c731998ded5e0f@kmshc.com/meetingtype/zqRCFnOFHUaX7y0k6FWNaA2?anonymous&amp;ismsaljsauthenabled&amp;ep=mlink" target="_blank" rel="noopener">Book a call →</a>
+    </div>
   </div>
 </div>
 
@@ -363,6 +382,7 @@
   <span class="eyebrow">BA/BE acceleration · ROI model</span>
   <h1 class="hook">You don't lose money on a failed BE study. You lose it on <em>the four months you waited for a slot.</em></h1>
   <p class="sub"><strong>In-house BA/BE + development dossier under one roof</strong> means a first-time filing lands roughly four months sooner. Below is where that number comes from, and what it's worth on your molecule.</p>
+  <a class="hero-cta-link" href="https://bookings.cloud.microsoft/bookwithme/user/06b9a3e9ce3c46a4a5c731998ded5e0f@kmshc.com/meetingtype/zqRCFnOFHUaX7y0k6FWNaA2?anonymous&amp;ismsaljsauthenabled&amp;ep=mlink" target="_blank" rel="noopener">Prefer to talk it through? Book a call →</a>
 
   <div class="bridge">
     <div class="bridge-head">
@@ -628,7 +648,8 @@
         </div>
       </div>
       <p class="bd-note">Up to ~4 months on a typical first-time filing, based on the 5-step bridge above. V2 is usually the number that lands hardest. It isn't extra speed, it's a permanent shift in who you are on the shelf.</p>
-      <button type="button" class="btn" id="downloadPdf" style="width:100%; margin-top:18px;">Download PDF report</button>
+      <a class="btn" style="display:flex; align-items:center; justify-content:center; text-decoration:none; width:100%; margin-top:18px;" href="https://bookings.cloud.microsoft/bookwithme/user/06b9a3e9ce3c46a4a5c731998ded5e0f@kmshc.com/meetingtype/zqRCFnOFHUaX7y0k6FWNaA2?anonymous&amp;ismsaljsauthenabled&amp;ep=mlink" target="_blank" rel="noopener">Book a call to discuss your molecule →</a>
+      <button type="button" class="btn btn-secondary" id="downloadPdf" style="width:100%; margin-top:10px;">Download PDF report</button>
     </div>
   </div>
 </div>
